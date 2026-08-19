@@ -1,0 +1,238 @@
+/* ==========================================================================
+   1. VARIABLE TEMA & WARNA (THEME CONFIGURATION)
+   ========================================================================== */
+:root {
+    --primary: #1e3a8a;       /* Navy Blue Utama */
+    --accent: #2563eb;        /* Royal Blue untuk Aksesibilitas & Tombol */
+    --accent-hover: #1d4ed8;  /* Blue Hover State */
+    --bg: #f8fafc;            /* Background Halaman Soft Slate */
+    --card: #ffffff;          /* Kartu Konten Putih */
+    --text: #0f172a;          /* Warna Teks Gelap Utama */
+    --text-muted: #64748b;    /* Warna Teks Sekunder/Sub-judul */
+    --border: #cbd5e1;        /* Garis Pinggir Komponen */
+    
+    /* Warna Status Hasil & Feedback */
+    --success: #16a34a;       /* Hijau Jawaban Benar / Lulus */
+    --success-bg: #dcfce7;
+    --warning: #d97706;       /* Kuning Remedial */
+    --warning-bg: #fef3c7;
+    --danger: #dc2626;        /* Merah Jawaban Salah / Ulang */
+    --danger-bg: #fee2e2;
+}
+
+/* ==========================================================================
+   2. GLOBAL LAYOUT & CONTAINER
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 24px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    background: var(--card);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    padding: 28px;
+    border: 1px solid #e2e8f0;
+}
+
+/* ==========================================================================
+   3. HEADER & JUDUL
+   ========================================================================== */
+header {
+    text-align: center;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 18px;
+    margin-bottom: 24px;
+}
+
+header h1 {
+    color: var(--primary);
+    margin: 0 0 6px 0;
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+}
+
+.motto {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* ==========================================================================
+   4. GRID PEMILIH MODUL / KATEGORI SOAL
+   ========================================================================== */
+.grid-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.module-btn {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.module-btn:hover {
+    border-color: var(--accent);
+    background: #eff6ff;
+    transform: translateY(-2px);
+}
+
+.module-btn.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.module-btn strong {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+
+.module-btn span {
+    display: block;
+    font-size: 0.8rem;
+    opacity: 0.85;
+}
+
+/* ==========================================================================
+   5. BILAH STATISTIK & TAMPILAN SOAL
+   ========================================================================== */
+.stats-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f1f5f9;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--primary);
+}
+
+.question-text {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--text);
+}
+
+/* ==========================================================================
+   6. PILIHAN JAWABAN & INTERAKSI (STATE)
+   ========================================================================== */
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.opt-btn {
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    padding: 14px 18px;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.opt-btn:hover:not(:disabled) {
+    background: #f1f5f9;
+    border-color: var(--border);
+}
+
+.opt-btn:disabled {
+    cursor: default;
+}
+
+/* Jawaban Benar */
+.opt-btn.correct {
+    background: var(--success-bg) !important;
+    border-color: var(--success) !important;
+    color: var(--success) !important;
+    font-weight: 700;
+}
+
+/* Jawaban Salah */
+.opt-btn.wrong {
+    background: var(--danger-bg) !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   7. KOTAK PEMBAHASAN & TOMBOL AKSI
+   ========================================================================== */
+.explanation {
+    margin-top: 20px;
+    padding: 16px;
+    background: #eff6ff;
+    border-left: 4px solid var(--accent);
+    border-radius: 4px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.btn-action {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+    transition: background-color 0.2s ease;
+}
+
+.btn-action:hover {
+    background: var(--accent-hover);
+}
+
+/* ==========================================================================
+   8. LENCANA STATUS & EVALUASI
+   ========================================================================== */
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: white;
+}
+
+.badge-green { background: var(--success); }
+.badge-yellow { background: var(--warning); }
+.badge-red { background: var(--danger); }
