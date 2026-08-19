@@ -1,238 +1,259 @@
-/* ==========================================================================
-   1. VARIABLE TEMA & WARNA (THEME CONFIGURATION)
-   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 :root {
-    --primary: #1e3a8a;       /* Navy Blue Utama */
-    --accent: #2563eb;        /* Royal Blue untuk Aksesibilitas & Tombol */
-    --accent-hover: #1d4ed8;  /* Blue Hover State */
-    --bg: #f8fafc;            /* Background Halaman Soft Slate */
-    --card: #ffffff;          /* Kartu Konten Putih */
-    --text: #0f172a;          /* Warna Teks Gelap Utama */
-    --text-muted: #64748b;    /* Warna Teks Sekunder/Sub-judul */
-    --border: #cbd5e1;        /* Garis Pinggir Komponen */
-    
-    /* Warna Status Hasil & Feedback */
-    --success: #16a34a;       /* Hijau Jawaban Benar / Lulus */
-    --success-bg: #dcfce7;
-    --warning: #d97706;       /* Kuning Remedial */
-    --warning-bg: #fef3c7;
-    --danger: #dc2626;        /* Merah Jawaban Salah / Ulang */
-    --danger-bg: #fee2e2;
+    --bg-dark: #0b0f19;
+    --card-bg: #151c2e;
+    --card-hover: #1c263e;
+    --card-border: #1e293d;
+    --primary: #6366f1;
+    --primary-hover: #4f46e5;
+    --primary-glow: rgba(99, 102, 241, 0.25);
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --success: #22c55e;
+    --success-bg: rgba(34, 197, 94, 0.15);
+    --danger: #ef4444;
+    --danger-bg: rgba(239, 68, 68, 0.15);
+    --warning: #f59e0b;
 }
 
-/* ==========================================================================
-   2. GLOBAL LAYOUT & CONTAINER
-   ========================================================================== */
 * {
     box-sizing: border-box;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
 body {
-    background-color: var(--bg);
-    color: var(--text);
+    background-color: var(--bg-dark);
+    color: var(--text-main);
     margin: 0;
-    padding: 24px 16px;
+    padding: 40px 20px;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     min-height: 100vh;
 }
 
 .container {
     width: 100%;
-    max-width: 800px;
-    background: var(--card);
-    border-radius: 12px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
-    padding: 28px;
-    border: 1px solid #e2e8f0;
+    max-width: 900px;
+    background: transparent;
+    padding: 0;
 }
 
-/* ==========================================================================
-   3. HEADER & JUDUL
-   ========================================================================== */
+/* HEADER & TITLE SECTION */
 header {
     text-align: center;
-    border-bottom: 2px solid #f1f5f9;
-    padding-bottom: 18px;
-    margin-bottom: 24px;
-}
-
-header h1 {
-    color: var(--primary);
-    margin: 0 0 6px 0;
-    font-size: 1.8rem;
-    font-weight: 800;
-    letter-spacing: -0.025em;
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 40px;
 }
 
 .motto {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    font-style: italic;
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #818cf8;
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    font-style: normal;
 }
 
-/* ==========================================================================
-   4. GRID PEMILIH MODUL / KATEGORI SOAL
-   ========================================================================== */
+header h1 {
+    color: var(--text-main);
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin: 0 0 12px 0;
+    letter-spacing: -0.02em;
+}
+
+#setup-view p {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    max-width: 520px;
+    margin: 0 auto 32px auto;
+    line-height: 1.6;
+}
+
+#setup-view p strong {
+    display: none; /* Menyembunyikan label bawaan agar rapi */
+}
+
+/* GRID MODULE SELECTOR */
 .grid-selector {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 12px;
-    margin-bottom: 24px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
 }
 
 .module-btn {
-    background: #f8fafc;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px;
-    text-align: left;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 20px;
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+    overflow: hidden;
 }
 
 .module-btn:hover {
-    border-color: var(--accent);
-    background: #eff6ff;
+    background: var(--card-hover);
+    border-color: #334155;
     transform: translateY(-2px);
 }
 
 .module-btn.active {
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    background: #172036;
+    border-color: var(--primary);
+    box-shadow: 0 0 20px var(--primary-glow);
 }
 
 .module-btn strong {
-    display: block;
-    font-size: 0.9rem;
-    margin-bottom: 4px;
+    color: var(--text-main);
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.3;
 }
 
 .module-btn span {
-    display: block;
-    font-size: 0.8rem;
-    opacity: 0.85;
+    color: var(--text-muted) !important;
+    font-size: 0.85rem !important;
+    line-height: 1.5;
 }
 
-/* ==========================================================================
-   5. BILAH STATISTIK & TAMPILAN SOAL
-   ========================================================================== */
+/* QUIZ VIEW & STATS */
+.quiz-box, .result-box {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
 .stats-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #f1f5f9;
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    font-weight: 600;
-    font-size: 0.95rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 12px 20px;
+    border-radius: 12px;
+    margin-bottom: 28px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.stats-bar span span {
     color: var(--primary);
 }
 
 .question-text {
-    font-size: 1.25rem;
-    margin-bottom: 20px;
+    font-size: 1.35rem;
     font-weight: 700;
     line-height: 1.5;
-    color: var(--text);
+    margin-bottom: 24px;
+    color: var(--text-main);
 }
 
-/* ==========================================================================
-   6. PILIHAN JAWABAN & INTERAKSI (STATE)
-   ========================================================================== */
+/* OPTIONS GRID */
 .options-grid {
-    display: grid;
-    grid-template-columns: 1fr;
     gap: 12px;
 }
 
 .opt-btn {
-    background: #ffffff;
-    border: 1.5px solid #e2e8f0;
-    padding: 14px 18px;
-    border-radius: 8px;
-    text-align: left;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--card-border);
+    color: var(--text-main);
+    padding: 16px 20px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all 0.2s ease;
 }
 
 .opt-btn:hover:not(:disabled) {
-    background: #f1f5f9;
-    border-color: var(--border);
+    background: var(--card-hover);
+    border-color: #334155;
+    color: #ffffff;
 }
 
-.opt-btn:disabled {
-    cursor: default;
-}
-
-/* Jawaban Benar */
 .opt-btn.correct {
     background: var(--success-bg) !important;
     border-color: var(--success) !important;
     color: var(--success) !important;
-    font-weight: 700;
 }
 
-/* Jawaban Salah */
 .opt-btn.wrong {
     background: var(--danger-bg) !important;
     border-color: var(--danger) !important;
     color: var(--danger) !important;
-    font-weight: 700;
 }
 
-/* ==========================================================================
-   7. KOTAK PEMBAHASAN & TOMBOL AKSI
-   ========================================================================== */
+/* EXPLANATION BOX */
 .explanation {
     margin-top: 20px;
     padding: 16px;
-    background: #eff6ff;
-    border-left: 4px solid var(--accent);
-    border-radius: 4px;
-    font-size: 0.95rem;
+    background: rgba(99, 102, 241, 0.08);
+    border-left: 4px solid var(--primary);
+    border-radius: 8px;
+    color: #c7d2fe;
+    font-size: 0.9rem;
     line-height: 1.5;
 }
 
+/* BUTTON ACTION */
 .btn-action {
-    background: var(--accent);
+    background: var(--primary);
     color: white;
     border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
+    padding: 14px 28px;
+    border-radius: 12px;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
-    margin-top: 20px;
-    width: 100%;
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 14px var(--primary-glow);
 }
 
 .btn-action:hover {
-    background: var(--accent-hover);
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px var(--primary-glow);
 }
 
-/* ==========================================================================
-   8. LENCANA STATUS & EVALUASI
-   ========================================================================== */
+#setup-view .btn-action {
+    max-width: 300px;
+    margin: 0 auto;
+    display: block;
+}
+
+/* RESULT VIEW */
+.result-box h2 {
+    font-size: 1.5rem;
+    margin-top: 0;
+}
+
 .badge {
-    display: inline-block;
     padding: 6px 12px;
-    border-radius: 6px;
+    border-radius: 20px;
     font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    color: white;
 }
 
-.badge-green { background: var(--success); }
-.badge-yellow { background: var(--warning); }
-.badge-red { background: var(--danger); }
+.badge-green { background: var(--success-bg); color: var(--success); border: 1px solid var(--success); }
+.badge-yellow { background: rgba(245, 158, 11, 0.15); color: var(--warning); border: 1px solid var(--warning); }
+.badge-red { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger); }
+
+#recommendation {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid var(--card-border);
+    color: var(--text-muted);
+}
