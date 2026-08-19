@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TKA Math Challenge - 12 Minggu Belajar Terstruktur</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-dark: #0b0f19;
+            --card-bg: #151c2e;
+            --card-hover: #1c263e;
+            --card-border: #1e293d;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --primary-glow: rgba(99, 102, 241, 0.25);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #22c55e;
+            --success-bg: rgba(34, 197, 94, 0.15);
+            --danger: #ef4444;
+            --danger-bg: rgba(239, 68, 68, 0.15);
+            --warning: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: transparent;
+            padding: 0;
+        }
+
+        /* HEADER & TITLE SECTION */
+        header {
+            text-align: center;
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 32px;
+        }
+
+        .motto {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #818cf8;
+            background: rgba(99, 102, 241, 0.12);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            font-style: normal;
+        }
+
+        header h1 {
+            color: var(--text-main);
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin: 0 0 12px 0;
+            letter-spacing: -0.02em;
+        }
+
+        #setup-view p.subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 520px;
+            margin: 0 auto 32px auto;
+            line-height: 1.6;
+        }
+
+        /* GRID MODULE SELECTOR */
+        .grid-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .module-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-btn:hover {
+            background: var(--card-hover);
+            border-color: #334155;
+            transform: translateY(-2px);
+        }
+
+        .module-btn.active {
+            background: #172036;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .module-btn strong {
+            color: var(--text-main);
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .module-btn span {
+            color: var(--text-muted) !important;
+            font-size: 0.85rem !important;
+            line-height: 1.5;
+        }
+
+        /* QUIZ VIEW & STATS */
+        .quiz-box, .result-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: none;
+        }
+
+        .stats-bar {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-bottom: 28px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .stats-bar span span {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .question-text {
+            font-size: 1.35rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 24px;
+            color: var(--text-main);
+        }
+
+        /* OPTIONS GRID */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .opt-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .opt-btn:hover:not(:disabled) {
+            background: var(--card-hover);
+            border-color: #334155;
+            color: #ffffff;
+        }
+
+        .opt-btn.correct {
+            background: var(--success-bg) !important;
+            border-color: var(--success) !important;
+            color: var(--success) !important;
+        }
+
+        .opt-btn.wrong {
+            background: var(--danger-bg) !important;
+            border-color: var(--danger) !important;
+            color: var(--danger) !important;
+        }
+
+        /* EXPLANATION BOX */
+        .explanation {
+            margin-top: 20px;
+            padding: 16px;
+            background: rgba(99, 102, 241, 0.08);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            color: #c7d2fe;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            display: none;
+        }
+
+        /* BUTTON ACTION */
+        .btn-action {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px var(--primary-glow);
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn-action:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px var(--primary-glow);
+        }
+
+        #setup-view .btn-action {
+            max-width: 320px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        /* RESULT VIEW */
+        .result-box h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .badge-green { background: var(--success-bg); color: var(--success); border: 1px solid var(--success); }
+        .badge-yellow { background: rgba(245, 158, 11, 0.15); color: var(--warning); border: 1px solid var(--warning); }
+        .badge-red { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger); }
+
+        #recommendation {
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            padding: 16px;
+            border-radius: 12px;
+            margin: 20px 0;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="motto">Kuis Matematika</div>
+        <h1>Pilih Topik Latihan</h1>
+    </header>
+
+    <!-- SETUP VIEW -->
+    <div id="setup-view">
+        <p class="subtitle">Uji kemampuan berhitung dasar, aljabar, geometri, hingga kalkulus secara terstruktur.</p>
+        <div class="grid-selector" id="module-selector"></div>
+        <button class="btn-action" onclick="startQuiz()">Mulai Tantangan</button>
+    </div>
+
+    <!-- QUIZ VIEW -->
+    <div id="quiz-view" class="quiz-box">
+        <div class="stats-bar">
+            <span>Soal: <span id="q-num">1</span>/10</span>
+            <span>Modul: <span id="module-label">-</span></span>
+            <span>Skor: <span id="score-val">0</span></span>
+        </div>
+        <div class="question-text" id="q-text">Pertanyaan akan muncul di sini...</div>
+        <div class="options-grid" id="options-container"></div>
+        <div class="explanation" id="explanation-box"></div>
+        <button class="btn-action" id="next-btn" style="display:none;" onclick="nextQuestion()">Soal Berikutnya</button>
+    </div>
+
+    <!-- RESULT VIEW -->
+    <div id="result-view" class="result-box">
+        <h2>Hasil Evaluasi Modul</h2>
+        <p>Skor Akhir Anda: <strong id="final-score" style="font-size: 1.8rem; color: var(--primary);">0%</strong></p>
+        <div id="status-badge" style="margin-bottom: 15px;"></div>
+        <div id="recommendation"></div>
+        <button class="btn-action" onclick="resetQuiz()">Pilih Modul Lain</button>
+    </div>
+</div>
+
+<script>
+const modules = [
+    { id: 0, title: "Aritmatika Dasar", desc: "Penjumlahan, Pengurangan, Perkalian, Pembagian, Akar Pangkat 2 & 3" },
+    { id: 1, title: "Minggu 1: Bilangan & Operasi", desc: "Pecahan, persen, rasio, pangkat & notasi ilmiah" },
+    { id: 2, title: "Minggu 2: Aljabar Dasar", desc: "Bentuk aljabar, persamaan & pertidaksamaan linear" },
+    { id: 3, title: "Minggu 3: Fungsi & Grafik", desc: "Fungsi linear, fungsi kuadrat & sifat grafik" },
+    { id: 4, title: "Minggu 4: SPL & Sistem Persamaan", desc: "SPLDV, SPLTV & Soal cerita" },
+    { id: 5, title: "Minggu 5: Geometri", desc: "Bangun datar, bangun ruang, luas, keliling & volume" },
+    { id: 6, title: "Minggu 6: Trigonometri", desc: "Sin, Cos, Tan, Sudut istimewa & Identitas" },
+    { id: 7, title: "Minggu 7: Geometri Analitik", desc: "Titik, jarak, gradien & persamaan garis" },
+    { id: 8, title: "Minggu 8: Peluang", desc: "Peluang dasar, permutasi & kombinasi" },
+    { id: 9, title: "Minggu 9: Statistika", desc: "Mean, median, modus, kuartil & interpretasi data" },
+    { id: 10, title: "Minggu 10: Eksponen & Logaritma", desc: "Sifat pangkat, akar & logaritma dasar" },
+    { id: 11, title: "Minggu 11: Kalkulus Dasar", desc: "Limit fungsi, turunan & aplikasi" },
+    { id: 12, title: "Minggu 12: Mixed TKA & Simulasi", desc: "Campuran seluruh materi TKA" }
+];
+
+let selectedModule = 0;
+let currentQuestions = [];
+let currentIndex = 0;
+let score = 0;
+
+function init() {
+    const container = document.getElementById('module-selector');
+    container.innerHTML = '';
+    modules.forEach(m => {
+        const btn = document.createElement('div');
+        btn.className = `module-btn ${m.id === selectedModule ? 'active' : ''}`;
+        btn.onclick = () => selectModule(m.id);
+        btn.innerHTML = `<strong>${m.title}</strong><span>${m.desc}</span>`;
+        container.appendChild(btn);
+    });
+}
+
+function selectModule(id) {
+    selectedModule = id;
+    init();
+}
+
+function generateQuestions(modId) {
+    let qList = [];
+    for (let i = 0; i < 10; i++) {
+        let q = {};
+        let activeMod = modId === 12 ? Math.floor(Math.random() * 11) : modId;
+
+        if (activeMod === 0) {
+            let type = Math.floor(Math.random() * 3);
+            if (type === 0) {
+                let a = Math.floor(Math.random() * 10) + 1, b = Math.floor(Math.random() * 10) + 1;
+                q = { q: `${a} × ${b} = ?`, ans: a * b, exp: `Perkalian dasar ${a} dikali ${b} = ${a*b}` };
+            } else if (type === 1) {
+                let val = Math.floor(Math.random() * 20) + 1;
+                q = { q: `√${val * val} = ?`, ans: val, exp: `Akar pangkat 2 dari ${val*val} adalah ${val}` };
+            } else {
+                let val = Math.floor(Math.random() * 10) + 1;
+                q = { q: `∛${val * val * val} = ?`, ans: val, exp: `Akar pangkat 3 dari ${val*val*val} adalah ${val}` };
+            }
+        } else if (activeMod === 2) {
+            let a = Math.floor(Math.random() * 5) + 2, b = Math.floor(Math.random() * 10) + 1;
+            let x = Math.floor(Math.random() * 8) + 1;
+            let c = a * x + b;
+            q = { q: `Selesaikan persamaan: ${a}x + ${b} = ${c}. Berapakah x?`, ans: x, exp: `${a}x = ${c} - ${b} ➔ ${a}x = ${c-b} ➔ x = ${x}` };
+        } else if (activeMod === 6) {
+            const angles = [0, 30, 45, 60, 90];
+            const sinVals = { 0: "0", 30: "0.5", 45: "0.71", 60: "0.87", 90: "1" };
+            let ang = angles[Math.floor(Math.random() * angles.length)];
+            q = { q: `Berapakah nilai dari sin(${ang}°)?`, ans: sinVals[ang], exp: `Sudut istimewa sin(${ang}°) = ${sinVals[ang]}` };
+        } else if (activeMod === 11) {
+            let n = Math.floor(Math.random() * 4) + 2;
+            q = { q: `Turunan pertama d/dx dari f(x) = x^${n} adalah...`, ans: `${n}x^${n-1}`, exp: `Gunakan rumus d/dx(x^n) = n·x^(n-1)` };
+        } else {
+            let a = Math.floor(Math.random() * 10) + 2;
+            let b = Math.floor(Math.random() * 10) + 2;
+            q = { q: `[Modul ${activeMod}] Berapakah nilai dari ${a} + ${b} × 2?`, ans: a + (b * 2), exp: `Dahulukan perkalian: ${b} × 2 = ${b*2}, lalu tambahkan ${a} = ${a + b*2}` };
+        }
+
+        let correct = q.ans;
+        let opts = new Set([correct]);
+        while (opts.size < 4) {
+            if (typeof correct === 'number') {
+                let offset = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
+                opts.add(correct + offset);
+            } else {
+                opts.add(`${Math.floor(Math.random()*5)+1}x^${Math.floor(Math.random()*3)}`);
+            }
+        }
+
+        q.options = Array.from(opts).sort(() => Math.random() - 0.5);
+        qList.push(q);
+    }
+    return qList;
+}
+
+function startQuiz() {
+    currentQuestions = generateQuestions(selectedModule);
+    currentIndex = 0;
+    score = 0;
+    document.getElementById('setup-view').style.display = 'none';
+    document.getElementById('quiz-view').style.display = 'block';
+    document.getElementById('module-label').innerText = modules.find(m => m.id === selectedModule).title.split(':')[0];
+    showQuestion();
+}
+
+function showQuestion() {
+    let q = currentQuestions[currentIndex];
+    document.getElementById('q-num').innerText = currentIndex + 1;
+    document.getElementById('score-val').innerText = score;
+    document.getElementById('q-text').innerText = q.q;
+    document.getElementById('explanation-box').style.display = 'none';
+    document.getElementById('next-btn').style.display = 'none';
+
+    const optContainer = document.getElementById('options-container');
+    optContainer.innerHTML = '';
+    q.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(btn, opt, q.ans, q.exp);
+        optContainer.appendChild(btn);
+    });
+}
+
+function checkAnswer(selectedBtn, chosen, correct, exp) {
+    const allBtns = document.querySelectorAll('.opt-btn');
+    allBtns.forEach(btn => btn.disabled = true);
+
+    if (String(chosen) === String(correct)) {
+        selectedBtn.classList.add('correct');
+        score += 10;
+    } else {
+        selectedBtn.classList.add('wrong');
+        allBtns.forEach(btn => {
+            if (String(btn.innerText) === String(correct)) btn.classList.add('correct');
+        });
+    }
+
+    const expBox = document.getElementById('explanation-box');
+    expBox.innerHTML = `<strong>Pembahasan:</strong> ${exp}`;
+    expBox.style.display = 'block';
+    document.getElementById('next-btn').style.display = 'block';
+}
+
+function nextQuestion() {
+    currentIndex++;
+    if (currentIndex < currentQuestions.length) {
+        showQuestion();
+    } else {
+        showResult();
+    }
+}
+
+function showResult() {
+    document.getElementById('quiz-view').style.display = 'none';
+    document.getElementById('result-view').style.display = 'block';
+    
+    let percentage = (score / 100) * 100;
+    document.getElementById('final-score').innerText = `${percentage}%`;
+
+    let badge = document.getElementById('status-badge');
+    let rec = document.getElementById('recommendation');
+
+    if (percentage >= 80) {
+        badge.innerHTML = `<span class="badge badge-green">LULUS (≥ 80%)</span>`;
+        rec.innerHTML = `<strong>Hasil Bagus!</strong> Anda siap untuk lanjut ke modul materi berikutnya.`;
+    } else if (percentage >= 60) {
+        badge.innerHTML = `<span class="badge badge-yellow">REMEDIAL (60-79%)</span>`;
+        rec.innerHTML = `<strong>Penguatan Konsep:</strong> Disarankan melakukan remediasi dan mengulang latihan soal variasi.`;
+    } else {
+        badge.innerHTML = `<span class="badge badge-red">ULANG KONSEP (< 60%)</span>`;
+        rec.innerHTML = `<strong>Perlu Evaluasi:</strong> Pelajari kembali materi dasar pada modul ini sebelum mengambil tes ulang.`;
+    }
+}
+
+function resetQuiz() {
+    document.getElementById('result-view').style.display = 'none';
+    document.getElementById('setup-view').style.display = 'block';
+    init();
+}
+
+// Initial Run
+init();
+</script>
+</body>
+</html>
